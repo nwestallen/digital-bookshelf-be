@@ -8,5 +8,5 @@ exports.up = knex => {
 };
 
 exports.down = knex => {
-  return knex.schema.dropTableIfExists('case');
+  return knex.schema.dropTableIfExists('cases');
 };
