@@ -1,5 +1,5 @@
 
-exports.up = (knex) => {
+exports.up = knex => {
   return knex.schema
     .createTable('users', table => {
       table.increments('user_id').notNullable().unique().primary();
