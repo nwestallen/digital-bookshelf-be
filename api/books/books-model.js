@@ -4,7 +4,26 @@ const findBy = filter => {
   return db('books').where(filter)
 };
 
+const getLib = user_id => {
+  return db.raw(
+    `select
+	cases.case_id, cases.lib_order, cases.user_id,
+	(select json_agg(shelf) as shelves
+	from(
+		select s.shelf_id, s.case_order, s.case_id,
+		(select json_agg(bk)
+		 from (
+			select book_title from books where books.shelf_id = s.shelf_id
+		 ) bk
+		) as books
+	from shelves as s) shelf
+	where shelf.case_id = cases.case_id)
+	from cases
+  where user_id = ${user_id}`
+  )
+};
 
 module.exports = {
   findBy,
+  getLib
 };
