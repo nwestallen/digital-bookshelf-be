@@ -4,7 +4,7 @@ const Book = require('./books-model');
 const router = express.Router();
 
 router.get('/:user_id', (req, res) => {
-  Book.getByUser(req.params.user_id)
+  Book.findBy({user_id: req.params.user_id})
     .then(books => {
       res.json(books);
     })
