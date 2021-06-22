@@ -13,7 +13,7 @@ const getLib = user_id => {
 		select s.shelf_id, s.case_order, s.case_id,
 		(select json_agg(bk)
 		 from (
-			select book_title from books where books.shelf_id = s.shelf_id
+			select book_title, book_color from books where books.shelf_id = s.shelf_id
 		 ) bk
 		) as books
 	from shelves as s) shelf
