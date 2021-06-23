@@ -24,7 +24,12 @@ const getLib = user_id => {
   )
 };
 
+const add = async book => {
+  return await db('books').insert(book, ['book_id']);
+};
+
 module.exports = {
   findBy,
-  getLib
+  getLib,
+  add
 };
