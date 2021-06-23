@@ -21,7 +21,15 @@ router.get('/:user_id/library', (req, res) => {
 router.post('/:user_id', (req, res) => {
   Book.add({...req.body, user_id: req.params.user_id })
   .then(book => {
-    res.status(201).json(book)
+    res.status(201).json(book);
+  })
+  .catch(err => res.status(500).json({message: err.message}));
+});
+
+router.put('/:book_id', (req, res) => {
+  Book.update({ book_id: req.params.book_id, ...req.body })
+  .then(book => {
+    res.json(book);
   })
   .catch(err => res.status(500).json({message: err.message}));
 });

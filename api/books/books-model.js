@@ -28,8 +28,13 @@ const add = async book => {
   return await db('books').insert(book, ['book_id']);
 };
 
+const update = async bookUpdate => {
+  return await db('books').update(bookUpdate, ['book_id']).where('book_id', bookUpdate.book_id);
+};
+
 module.exports = {
   findBy,
   getLib,
-  add
+  add,
+  update
 };
