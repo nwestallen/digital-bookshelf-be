@@ -67,6 +67,22 @@ describe('books', () => {
       const newBook = await db('books').where('book_id', 6).first();
       expect(newBook).toMatchObject({ book_title: 'The Way Things Work', book_id: 6 })
     });
+    it('[11] responds with status 400 when user_id does not exists', async () => {
+      const res = await request(server).post('/api/books/333').send({ book_title: 'The Way Things Work' });
+      expect(res.status).toBe(400);
+    });
+    it('[12] responds with appropriate error message when user_id does not exist', async () => {
+      const res = await request(server).post('/api/books/333').send({ book_title: 'The Way Things Work' });
+      expect(res.body.message).toMatch(/user_id 333 does not exist/);
+    });
+    it('[13] responds with status 400 when title is omitted from request body', async () => {
+      const res = await request(server).post('/api/books/2').send({ book_author: 'Dr. Seuss' });
+      expect(res.status).toBe(400);
+    });
+    it('[14] responds with appropriate error message when book_title is omitted', async () => {
+      const res = await request(server).post('/api/books/2').send({ book_author: 'Dr. Seuss' });
+      expect(res.body.message).toMatch(/book_title is required/);
+    });
   });
 
 });
