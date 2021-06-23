@@ -19,11 +19,9 @@ router.get('/:user_id/library', (req, res) => {
 });
 
 router.post('/:user_id', (req, res) => {
-  console.log('argument', req.body.book)
-  Book.add({...req.body.book, user_id: req.params.user_id })
+  Book.add({...req.body, user_id: req.params.user_id })
   .then(book => {
-    res.status(202).json(book)
-    console.log(book)
+    res.status(201).json(book)
   })
   .catch(err => res.status(500).json({message: err.message}));
 });

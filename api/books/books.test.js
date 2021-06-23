@@ -67,6 +67,6 @@ describe('books', () => {
       const newBook = await db('books').where('book_id', 6).first();
       expect(newBook).toMatchObject({ book_title: 'The Way Things Work', book_id: 6 })
     });
-  })
+  });
 
 });
