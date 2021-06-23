@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node index.js",
     "dev": "nodemon index.js",
     "knex": "npx knex",
@@ -17,7 +17,9 @@
   "license": "ISC",
   "devDependencies": {
     "eslint": "^7.28.0",
-    "nodemon": "^2.0.7"
+    "jest": "^27.0.5",
+    "nodemon": "^2.0.7",
+    "supertest": "^6.1.3"
   },
   "dependencies": {
     "cors": "^2.8.5",
