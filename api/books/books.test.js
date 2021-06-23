@@ -57,4 +57,16 @@ describe('books', () => {
     });
   });
 
+  describe('[POST] /api/books/:user_id', () => {
+    it('[9] responds with status 201 when successful', async () => {
+      const res = await request(server).post('/api/books/2').send({ book_title: 'The Way Things Work', book_author: 'David Macaulay'});
+      expect(res.status).toBe(201);
+    });
+    it('[10] successfully creates a new record in the books table', async () => {
+      await request(server).post('/api/books/2').send({ book_title: 'The Way Things Work', book_author: 'David Macaulay' });
+      const newBook = await db('books').where('book_id', 6).first();
+      expect(newBook).toMatchObject({ book_title: 'The Way Things Work', book_id: 6 })
+    });
+  })
+
 });
