@@ -85,4 +85,32 @@ describe('books', () => {
     });
   });
 
+  describe('[PUT] /api/books/:book_id', () => {
+    it('[15] responds with status 200 on successful update', async () => {
+      const res = await request(server).put('/api/books/5').send({ book_color: 'blue' });
+      expect(res.status).toBe(200);
+    });
+    it('[16] successfully updates targeted record with new data', async () => {
+      await request(server).put('/api/books/5').send({ book_color: 'blue' });
+      const updated = await db('books').where('book_id', 5).first();
+      expect(updated.body.message).toMatchObject({ book_title: 'Infinite Jest', book_color: 'blue' });
+    });
+    it('[17] responds with status 400 if user_id does not exist', async () => {
+      const res = await request(server).put('/api/books/456').send({ book_color: 'blue' });
+      expect(res.status).toBe(400);
+    });
+    it('[18] responds with appropriate error message when user_id does not exist', async () => {
+      const res = await request(server).put('/api/books/456').send({ book_color: 'blue' });
+      expect(res.body.message).toMatch(/user_id 456 does not exist/);
+    });
+    it('[19] responds with status 400 when bad data is submitted', async () => {
+      const res = await request(server).put('/api/books/5').send({ random_junk: 'nothing' });
+      expect(res.status).toBe(400);
+    });
+    it('[20] responds with appropriate error message when bad data is submitted', async () => {
+      const res = await request(server).put('/api/books/5').send({ random_junk: 'nothing '});
+      expect(res.body.message).toMatch(/random_junk is not a valid field name/);
+    });
+  });
+
 });
