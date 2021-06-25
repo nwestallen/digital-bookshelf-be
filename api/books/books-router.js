@@ -34,4 +34,13 @@ router.put('/:book_id', (req, res) => {
   .catch(err => res.status(500).json({message: err.message}));
 });
 
+router.put('/:user_id/order', (req, res) => {
+  console.log(req.body);
+  Book.bulkAdd(req.body)
+    .then(books => {
+      res.json(books);
+    })
+    .catch(err => res.status(500).json({ message: err.message }));
+});
+
 module.exports = router;

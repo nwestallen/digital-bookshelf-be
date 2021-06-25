@@ -32,9 +32,17 @@ const update = async bookUpdate => {
   return await db('books').update(bookUpdate, ['book_id']).where('book_id', bookUpdate.book_id);
 };
 
+const bulkAdd = async books => {
+  return await db('books')
+    .insert(books, ['book_id', 'shelf_order'])
+    .onConflict('book_id')
+    .merge();
+};
+
 module.exports = {
   findBy,
   getLib,
   add,
-  update
+  update,
+  bulkAdd
 };
